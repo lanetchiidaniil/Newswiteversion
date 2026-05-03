@@ -73,7 +73,7 @@ export default function Home() {
       </header>
       <main>
         <div className="wrapper">
-          <img src="/X2v02ezo_7w.jpg" className="image" alt="" />
+          <img src={`${import.meta.env.BASE_URL}X2v02ezo_7w.jpg`} className="image" alt="" />
           <div className="text">
             <h2>Падший ангел</h2>
             <p>История об ангелах, любви и возмездии</p>
