@@ -1,0 +1,71 @@
+body {
+    margin: 0;
+}
+
+.books-page {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #e8eff3;
+    color: #14211f;
+}
+
+.books-page .navbar {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #102622;
+    color: #f7fbf8;
+    padding: 14px 34px;
+    font-size: 25px;
+    box-sizing: border-box;
+    border-bottom: 3px solid #6bc7bb;
+}
+
+.books-page .navbar-left {
+    font-weight: bold;
+}
+
+.books-page .navbar a {
+    color: #f7fbf8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.books-page .navbar a:hover {
+    color: #9ce0d8;
+    text-decoration: underline;
+}
+
+.books-page .content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: calc(100vh - 60px);
+    text-align: center;
+    padding: 80px 20px 28px;
+    box-sizing: border-box;
+}
+
+.books-page .text-box {
+    background-color: #fffaf0;
+    border: 2px solid #20332f;
+    margin-top: 30px;
+    padding: 24px;
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 800px;
+    box-shadow: 0 8px 18px rgba(16, 38, 34, 0.18);
+}
+
+.books-page .text-box p {
+    margin: 0;
+}
+
+.books-page .attention {
+    color: #b84b3f;
+    font-size: 23px;
+    font-weight: bold;
+    font-family: 'Times New Roman', serif;
+}
