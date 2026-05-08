@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react'
 
 const REQUEST_TIMEOUT_MS = 45000
-const EMAILJS_URL = 'https://api.emailjs.com/api/v1.0/email/send'
 const EMAIL_SEND_DELAY_MS = 1100
 
 const POEM_SIZES = {
@@ -72,38 +71,12 @@ function isEmail(value) {
 }
 
 async function sendPoemEmail({ toEmail, toName, poem, theme }) {
-  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
-  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-
-  if (!serviceId || !templateId || !publicKey) {
-    throw new Error('Для отправки email нужно указать VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID и VITE_EMAILJS_PUBLIC_KEY в .env.local.')
-  }
-
-  const response = await fetch(EMAILJS_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      service_id: serviceId,
-      template_id: templateId,
-      user_id: publicKey,
-      template_params: {
-        to_email: toEmail,
-        to_name: toName || 'читатель',
-        sender_name: 'Литературный сайт',
-        poem,
-        theme: theme || 'стихотворение',
-        site_name: 'Литературный сайт',
-        from_email: 'diaconnicita@gmail.com',
-        reply_to: 'diaconnicita@gmail.com',
-      },
-    }),
+  await postJson('/api/send-poem-email', {
+    toEmail,
+    toName,
+    poem,
+    theme,
   })
-
-  if (!response.ok) {
-    const text = await response.text().catch(() => '')
-    throw new Error(text || 'EmailJS не смог отправить письмо.')
-  }
 }
 
 export default function PoemAiStudio({ onSavePoem }) {
