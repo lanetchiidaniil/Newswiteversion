@@ -9,6 +9,7 @@ import {
   savePoemEdit,
   updateCustomPoem,
 } from '../adminStorage.js'
+import PoemAiStudio from '../components/PoemAiStudio.jsx'
 import { poems } from '../data/poemsData.js'
 import '../styles/poezii.css'
 
@@ -140,6 +141,13 @@ export default function Poezii() {
     event.currentTarget.reset()
   }
 
+  const handleSaveGeneratedPoem = (category, text) => {
+    if (!text.trim()) return
+
+    setCustomPoems(addCustomPoem(category, text))
+    setOffsets((prev) => ({ ...prev, [category]: 0 }))
+  }
+
   const handleEditPoem = (event) => {
     event.preventDefault()
     if (!editingPoem) return
@@ -225,6 +233,8 @@ export default function Poezii() {
       )}
 
       <main id="top">
+        <PoemAiStudio onSavePoem={handleSaveGeneratedPoem} />
+
         <PoemCategory
           category="love"
           label="Любовь"
