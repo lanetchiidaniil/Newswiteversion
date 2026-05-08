@@ -16,11 +16,17 @@ export default async function handler(req, res) {
   const serviceId = process.env.EMAILJS_SERVICE_ID
   const templateId = process.env.EMAILJS_TEMPLATE_ID
   const publicKey = process.env.EMAILJS_PUBLIC_KEY
-  const privateKey = process.env.EMAILJS_PRIVATE_KEY
+  const privateKey = String(process.env.EMAILJS_PRIVATE_KEY || '').trim()
 
   if (!serviceId || !templateId || !publicKey) {
     return sendJson(res, 500, {
       error: 'Не заданы EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID или EMAILJS_PUBLIC_KEY.',
+    })
+  }
+
+  if (!privateKey) {
+    return sendJson(res, 500, {
+      error: 'EMAILJS_PRIVATE_KEY is missing in Vercel Environment Variables or this deployment was created before it was added.',
     })
   }
 
@@ -50,7 +56,7 @@ export default async function handler(req, res) {
         service_id: serviceId,
         template_id: templateId,
         user_id: publicKey,
-        accessToken: privateKey || undefined,
+        accessToken: privateKey,
         template_params: {
           to_email: String(toEmail).trim(),
           to_name: String(toName || 'читатель').trim(),
